@@ -94,7 +94,7 @@ export default function ProfileDashboard() {
           <div className="relative">
             <div className="w-16 h-16 rounded-full overflow-hidden bg-gold/20 border-2 border-gold/30">
               {user?.avatar_url
-                ? <img src={`${import.meta.env.VITE_API_URL}${user.avatar_url}`} alt={user.name} className="w-full h-full object-cover" />
+                ? <img src={`${import.meta.env.VITE_API_URL || ''}${user.avatar_url}`} alt={user.name} className="w-full h-full object-cover" />
                 : <div className="w-full h-full flex items-center justify-center font-heading text-2xl text-gold">{user?.name?.[0]?.toUpperCase()}</div>
               }
             </div>
