@@ -1,16 +1,29 @@
-# ── Build stage ───────────────────────────────────────────
+# ── Build frontend ─────────────────────────────────────────
 FROM node:24-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
-# ── Serve stage ───────────────────────────────────────────
-FROM nginx:1.27-alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-  CMD wget --spider --quiet http://localhost/ || exit 1
-CMD ["nginx", "-g", "daemon off;"]
+# ── Production image ───────────────────────────────────────
+FROM node:24-alpine
+WORKDIR /app
+
+# Copy built frontend
+COPY --from=build /app/dist ./dist
+
+# Install server dependencies
+COPY server/package*.json ./server/
+RUN cd server && npm ci --omit=dev --ignore-scripts
+COPY server/ ./server/
+RUN mkdir -p /app/server/data
+
+ENV NODE_ENV=production
+ENV PORT=10000
+
+EXPOSE 10000
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD wget --spider --quiet http://localhost:10000/health || exit 1
+
+CMD ["node", "server/index.js"]
