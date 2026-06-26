@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: shahi-scoops
+    runtime: node
+    repo: https://github.com/VijayTech35/shahi-scoops-official
+    branch: main
+    buildCommand: npm install && cd server && npm install && cd .. && npm run build
+    startCommand: cd server && node index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      - key: CLIENT_URL
+        value: https://shahi-scoops.onrender.com
+      - key: CORS_ORIGINS
+        value: https://shahi-scoops.onrender.com
+      - key: DB_TYPE
+        value: sqlite
+      - key: DB_FILE
+        value: ./data/shahi_scoops.db
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_TTL
+        value: 15m
+      - key: JWT_REFRESH_TTL
+        value: 7d
+      - key: COOKIE_SECURE
+        value: "1"
+      - key: PAYMENT_SANDBOX
+        value: "true"
+      - key: LOG_LEVEL
+        value: info

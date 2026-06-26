@@ -138,6 +138,18 @@ app.get('/api/docs/ui', (req, res) => {
 </body></html>`)
 })
 
+// ── SERVE FRONTEND BUILD (production) ─────────────────────
+if (isProd) {
+  const distPath = path.join(__dirname, '..', 'dist')
+  if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath, { maxAge: '7d', etag: true }))
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path === '/health') return next()
+      res.sendFile(path.join(distPath, 'index.html'))
+    })
+  }
+}
+
 // ── SENTRY ERROR HANDLER (must be before other errors) ───
 app.use(...sentryHandlers.errorHandler)
 
