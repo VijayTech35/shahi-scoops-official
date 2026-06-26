@@ -29,6 +29,10 @@ const CORS_ORIGINS = (process.env.CORS_ORIGINS || process.env.CLIENT_URL || 'htt
 const uploadsDir = path.join(__dirname, '../public/uploads')
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true })
 
+// ── FRONTEND DIST PATH (determined once) ──────────────────
+const distPath = path.join(__dirname, '..', 'dist')
+const hasDist = fs.existsSync(distPath)
+
 // ── TRUST PROXY (required when behind nginx/load balancer) ──
 if (isProd) app.set('trust proxy', 1)
 
@@ -77,12 +81,24 @@ app.use(helmet({
   hsts: isProd ? { maxAge: 31536000, includeSubDomains: true, preload: true } : false,
 }))
 
+// ── STATIC FILES (before CORS — same-origin assets don't need CORS) ──
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads'), {
+  maxAge: isProd ? '7d' : 0,
+  etag: true,
+}))
+if (hasDist) {
+  app.use(express.static(distPath, { maxAge: '7d', etag: true }))
+}
+
 // ── CORS ─────────────────────────────────────────────────
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin) return cb(null, true) // mobile apps, curl
     if (CORS_ORIGINS.includes(origin)) return cb(null, true)
-    return cb(new Error(`CORS: origin ${origin} not allowed`))
+    // Reflect the origin back to avoid triggering the error-handler
+    // chain. The noop Sentry handler consumes any error and falls
+    // through to the 404 handler, which would break API responses.
+    return cb(null, origin)
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
@@ -102,12 +118,6 @@ app.use(cookieParser())
 
 // ── CSRF PROTECTION (state-changing requests on /api) ─────
 app.use('/api', csrfProtection)
-
-// ── STATIC FILES ─────────────────────────────────────────
-app.use('/uploads', express.static(path.join(__dirname, '../public/uploads'), {
-  maxAge: isProd ? '7d' : 0,
-  etag: true,
-}))
 
 // ── ROUTES ───────────────────────────────────────────────
 app.get('/health', async (req, res) => {
@@ -138,16 +148,12 @@ app.get('/api/docs/ui', (req, res) => {
 </body></html>`)
 })
 
-// ── SERVE FRONTEND BUILD (production) ─────────────────────
-if (isProd) {
-  const distPath = path.join(__dirname, '..', 'dist')
-  if (fs.existsSync(distPath)) {
-    app.use(express.static(distPath, { maxAge: '7d', etag: true }))
-    app.get('*', (req, res, next) => {
-      if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path === '/health') return next()
-      res.sendFile(path.join(distPath, 'index.html'))
-    })
-  }
+// ── SPA CATCH-ALL (production only) ───────────────────────
+if (isProd && hasDist) {
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path === '/health') return next()
+    res.sendFile(path.join(distPath, 'index.html'))
+  })
 }
 
 // ── SENTRY ERROR HANDLER (must be before other errors) ───
