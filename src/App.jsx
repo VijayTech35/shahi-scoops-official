@@ -96,11 +96,11 @@ function MainLayout({ children }) {
 
 export default function App() {
   return (
-    <ErrorBoundary>
     <BrowserRouter>
       <ThemeProvider>
       <AuthProvider>
         <CartProvider>
+          <ErrorBoundary>
           <Routes>
             <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
 
@@ -141,10 +141,10 @@ export default function App() {
             {/* 404 */}
             <Route path="*" element={<MainLayout><NotFoundPage /></MainLayout>} />
           </Routes>
+          </ErrorBoundary>
         </CartProvider>
       </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
-    </ErrorBoundary>
   )
 }
