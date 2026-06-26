@@ -1,0 +1,35 @@
+services:
+  api:
+    build: ./server
+    container_name: shahi-api
+    restart: unless-stopped
+    env_file: ./server/.env.production
+    volumes:
+      - api-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    networks:
+      - shahi-net
+
+  web:
+    build: .
+    container_name: shahi-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - shahi-net
+
+volumes:
+  api-data:
+
+networks:
+  shahi-net:
+    driver: bridge

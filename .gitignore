@@ -1,0 +1,41 @@
+node_modules/
+dist/
+.env
+.env.local
+.env.development
+.env.production
+server/.env
+server/.env.local
+server/.env.production
+public/uploads/
+backups/
+*.log
+*.log.*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+.cache/
+coverage/
+.nyc_output/
+
+# Local dev artifacts
+.vite/
+.pids
+.started
+
+# Runtime data
+server/data/*.db
+server/data/*.db-shm
+server/data/*.db-wal
+server/pids.json
+server/server.log
+server.log
+vite.log
+
+# OS / editor cruft
+*~
+*.bak
+*-w

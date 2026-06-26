@@ -1,0 +1,16 @@
+{
+  "name": "Shahi Scoops",
+  "short_name": "Shahi Scoops",
+  "description": "Royal handcrafted ice cream, delivered to your door",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF8F0",
+  "theme_color": "#2C1A0E",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+node_modules
+data
+.env
+.env.local
+server-stdout.log
+server-stderr.log
+*.log
+.git
+test
+_*.mjs
