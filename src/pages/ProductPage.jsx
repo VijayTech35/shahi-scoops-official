@@ -83,7 +83,8 @@ export default function ProductPage() {
           <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
             <div className="rounded-3xl overflow-hidden border border-gold/10 bg-white">
               {product.image_url && (
-                <img src={product.image_url} alt={product.name} className="w-full aspect-square object-cover" loading="lazy" />
+                <img src={product.image_url} alt={product.name} className="w-full aspect-square object-cover" loading="lazy"
+                  onError={(e) => { e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23C9A84C15" width="400" height="400"/%3E%3Ctext x="200" y="200" text-anchor="middle" dominant-baseline="middle" font-size="60" font-family="serif" fill="%23C9A84C30"%3ES%3C/text%3E%3C/svg%3E' }} />
               )}
             </div>
           </motion.div>

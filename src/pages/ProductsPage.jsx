@@ -150,7 +150,8 @@ export default function ProductsPage() {
                   <Link to={`/products/${product.id}`} className="no-underline">
                     <div className="aspect-square overflow-hidden relative">
                       <img src={product.image_url} alt={product.name} loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => { e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23C9A84C15" width="400" height="400"/%3E%3Ctext x="200" y="200" text-anchor="middle" dominant-baseline="middle" font-size="60" font-family="serif" fill="%23C9A84C30"%3ES%3C/text%3E%3C/svg%3E' }} />
                       {product.badge && (
                         <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full bg-white/90 text-choco shadow-sm">
                           {product.badge}

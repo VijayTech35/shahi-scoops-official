@@ -11,6 +11,7 @@ const topFlavours = flavours.filter(f => f.rating >= 4.8)
 
 export default function BestSeller() {
   const [index, setIndex] = useState(0)
+  const [imgFailed, setImgFailed] = useState({})
   const cur = topFlavours[index]
 
   useEffect(() => {
@@ -40,7 +41,8 @@ export default function BestSeller() {
               initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
               className="absolute inset-0">
-              <img src={cur.heroBg} alt="" className="w-full h-full object-cover" loading="lazy" />
+              <img src={cur.heroBg} alt="" className="w-full h-full object-cover" loading="lazy"
+                onError={(e) => { if (!imgFailed.heroBg) { setImgFailed(p => ({...p, heroBg: true})); e.target.style.display = 'none' } }} />
               <div className="absolute inset-0 bg-gradient-to-r from-[#2C1A0E]/95 via-[#2C1A0E]/80 to-[#2C1A0E]/30" />
             </motion.div>
           </AnimatePresence>
@@ -139,7 +141,14 @@ export default function BestSeller() {
                         transition={{ duration: 0.6 }}
                         className="relative w-72 h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-2 shadow-2xl"
                         style={{ borderColor: `${cur.accent}40` }}>
-                        <img src={cur.image} alt={cur.name} className="w-full h-full object-cover" loading="lazy" />
+                        {imgFailed.image ? (
+                          <div className="w-full h-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${cur.accent}22, ${cur.accent}44)` }}>
+                            <span className="font-heading text-6xl font-bold opacity-30">{cur.name.charAt(0)}</span>
+                          </div>
+                        ) : (
+                        <img src={cur.image} alt={cur.name} className="w-full h-full object-cover" loading="lazy"
+                          onError={() => setImgFailed(p => ({...p, image: true}))} />
+                        )}
                       </motion.div>
                     </AnimatePresence>
                   </TiltCard>

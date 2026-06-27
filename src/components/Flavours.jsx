@@ -18,6 +18,7 @@ export default function Flavours() {
   const [wishlist, setWishlist] = useState([])
   const [preview, setPreview] = useState(null)
   const [activeCat, setActiveCat] = useState("All")
+  const [failedImgs, setFailedImgs] = useState(new Set())
 
   // Load wishlist from API if logged in
   useEffect(() => {
@@ -105,9 +106,16 @@ export default function Flavours() {
                 onClick={() => setPreview(item)}>
 
                 <TiltCard className={`relative aspect-square overflow-hidden bg-gradient-to-br ${bgGradients[i % bgGradients.length]}`} maxTilt={8} glare={true}>
+                  {failedImgs.has(item.name) ? (
+                    <div className="w-full h-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${item.accent}22, ${item.accent}44)` }}>
+                      <span className="font-heading text-3xl font-bold opacity-30">{item.name.charAt(0)}</span>
+                    </div>
+                  ) : (
                   <img src={item.image} alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    loading="lazy" />
+                    loading="lazy"
+                    onError={() => setFailedImgs(p => new Set(p).add(item.name))} />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {displayBadge && (
@@ -168,7 +176,14 @@ export default function Flavours() {
               onClick={e => e.stopPropagation()}
               className="bg-white dark:bg-[#2A1D15] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-gold/20">
               <div className="relative aspect-[4/3] overflow-hidden">
-                <img src={preview.image} alt={preview.name} className="w-full h-full object-cover" loading="lazy" />
+                {failedImgs.has(preview.name) ? (
+                  <div className="w-full h-full flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${preview.accent}22, ${preview.accent}44)` }}>
+                    <span className="font-heading text-6xl font-bold opacity-30">{preview.name.charAt(0)}</span>
+                  </div>
+                ) : (
+                <img src={preview.image} alt={preview.name} className="w-full h-full object-cover" loading="lazy"
+                  onError={() => setFailedImgs(p => new Set(p).add(preview.name))} />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute top-4 right-4">
                   <button onClick={() => setPreview(null)}

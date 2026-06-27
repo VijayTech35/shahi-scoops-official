@@ -60,6 +60,7 @@ app.use(httpLogger)
 // ── SECURITY HEADERS (HSTS, CSP, etc.) ───────────────────
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
   contentSecurityPolicy: isProd ? {
     useDefaults: true,
     directives: {
