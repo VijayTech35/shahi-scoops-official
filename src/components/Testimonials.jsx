@@ -23,14 +23,14 @@ const testimonials = [
     name: "Ananya Krishnan", city: "Bangalore",
     text: "Shahi Scoops sets the gold standard for premium ice cream in India. The Belgian Chocolate Royal is my non-negotiable weekend treat. Pure luxury.",
     flavour: "Belgian Chocolate",
-    img: "https://images.unsplash.com/photo-1534748640839-e3505a1b20ad?w=400&q=90&fit=crop&crop=face",
+    img: "https://images.unsplash.com/photo-1546967191-fdfb13ed6b1e?w=400&q=90&fit=crop&crop=face",
     rating: 5,
   },
   {
     name: "Vikram Joshi", city: "Pune",
     text: "Every flavour is better than the last. The Alphonso Mango is like summer in a scoop — absolutely unforgettable. Handcrafted perfection.",
     flavour: "Alphonso Mango",
-    img: "https://images.unsplash.com/photo-1506277886164-e25aa3f4f7b7?w=400&q=90&fit=crop&crop=face",
+    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=90&fit=crop&crop=face",
     rating: 5,
   },
   {

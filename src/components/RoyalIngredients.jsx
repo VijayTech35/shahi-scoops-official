@@ -6,7 +6,7 @@ const ingredients = [
   {
     name: "Kashmiri Saffron",
     desc: "The finest red-gold saffron threads from the high valleys of Pampore, Kashmir. Harvested by hand at dawn for unparalleled aroma and colour.",
-    image: "https://images.unsplash.com/photo-1602673752289-8acf5aa1e77b?w=1200&q=95&fit=crop",
+    image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=1200&q=95&fit=crop",
     accent: "#C9A84C",
     region: "Kashmir Valley",
     origin: "India",

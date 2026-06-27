@@ -3,7 +3,7 @@ import { motion } from "framer-motion"
 import RevealText from "./RevealText"
 import ParticleBackground from "./ParticleBackground"
 
-const BG = "https://images.unsplash.com/photo-1579165466741-7a7e3a2ea713?w=2400&q=95&fit=crop"
+const BG = "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=2400&q=95&fit=crop"
 
 const reasons = [
   { icon: Leaf, title: "Farm Fresh Milk", desc: "Sourced daily from certified organic farms. Cold-chain maintained from farm to scoop.", num: "01" },

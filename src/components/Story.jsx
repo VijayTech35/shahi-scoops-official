@@ -12,7 +12,7 @@ const pills = [
 const images = [
   "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=2400&q=95&fit=crop",
   "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&q=95&fit=crop",
-  "https://images.unsplash.com/photo-1579165466741-7a7e3a2ea713?w=800&q=95&fit=crop",
+  "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=800&q=95&fit=crop",
 ]
 
 export default function Story() {

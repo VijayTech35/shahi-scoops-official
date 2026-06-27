@@ -29,7 +29,7 @@ const questions = [
     q: "Choose your favourite ingredient.",
     key: "ingredient",
     options: [
-      { label: "Kashmiri Saffron", value: "saffron", flavor: "Kesar Pista", image: "https://images.unsplash.com/photo-1579165466741-7a7e3a2ea713?w=800&q=95&fit=crop", emoji: "✨" },
+      { label: "Kashmiri Saffron", value: "saffron", flavor: "Kesar Pista", image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=800&q=95&fit=crop", emoji: "✨" },
       { label: "Pistachios", value: "pistachio", flavor: "Kesar Pista", image: "https://images.unsplash.com/photo-1560008581-09826d1de69e?w=800&q=95&fit=crop", emoji: "🥜" },
       { label: "Rose Petals", value: "rose", flavor: "Rose & Cardamom", image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=800&q=95&fit=crop", emoji: "🌹" },
       { label: "Belgian Chocolate", value: "chocolate", flavor: "Belgian Chocolate", image: "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=800&q=95&fit=crop", emoji: "🍫" },
