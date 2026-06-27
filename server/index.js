@@ -110,9 +110,10 @@ app.use(cors({
 app.use(compression())
 
 // ── BODY PARSERS ─────────────────────────────────────────
+const jsonParser = express.json({ limit: '1mb' })
 app.use((req, res, next) => {
   if (req.path === '/api/payments/webhook') return next()
-  express.json({ limit: '1mb' })(req, res, next)
+  jsonParser(req, res, next)
 })
 app.use(express.urlencoded({ extended: true, limit: '1mb' }))
 app.use(cookieParser())
