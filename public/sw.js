@@ -1,7 +1,7 @@
 // Shahi Scoops service worker — cache-first for static assets,
 // network-first for API, with offline fallback.
 
-const CACHE_VERSION = 'shahi-v2-2026-06-07'
+const CACHE_VERSION = 'shahi-v2-2026-06-27'
 const STATIC_CACHE = `${CACHE_VERSION}-static`
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`
 
@@ -32,11 +32,9 @@ self.addEventListener('fetch', (event) => {
   const { request } = event
   const url = new URL(request.url)
 
-  // Skip non-GET, cross-origin (except our own CDN images)
+  // Skip non-GET, cross-origin
   if (request.method !== 'GET') return
-  if (url.origin !== self.location.origin && !url.hostname.includes('unsplash.com') && !url.hostname.includes('pexels.com')) {
-    return
-  }
+  if (url.origin !== self.location.origin) return
 
   // API: network-first, fallback to cache
   if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/health')) {
