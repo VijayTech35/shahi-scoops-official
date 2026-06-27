@@ -70,7 +70,7 @@ app.use(helmet({
       fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
       imgSrc: ["'self'", 'data:', 'blob:', 'https://images.unsplash.com', 'https://images.pexels.com', 'https://*.razorpay.com'],
       mediaSrc: ["'self'", 'https://videos.pexels.com'],
-      connectSrc: ["'self'", 'https://api.razorpay.com', 'https://lumberjack.razorpay.com', 'https://*.sentry.io', 'ws:', 'wss:'],
+      connectSrc: ["'self'", 'https://images.unsplash.com', 'https://images.pexels.com', 'https://videos.pexels.com', 'https://api.razorpay.com', 'https://lumberjack.razorpay.com', 'https://*.sentry.io', 'ws:', 'wss:'],
       frameSrc: ["'self'", 'https://api.razorpay.com', 'https://checkout.razorpay.com'],
       workerSrc: ["'self'", 'blob:'],
       objectSrc: ["'none'"],
